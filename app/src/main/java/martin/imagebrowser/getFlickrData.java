@@ -51,6 +51,9 @@ public class getFlickrData extends RawData {
         return mDestinationUrl != null;
 
     }
+    public List<Picture> getMPictures(){
+        return mPictures;
+    }
 
     public void proccessResult(){
         if(getmDownloadStatus() != downloadStatus.OK){
@@ -102,7 +105,10 @@ public class getFlickrData extends RawData {
             proccessResult();
         }
         protected String doInBackGround(String... params){
-            return super.doInBackground(params);
+            //so doesn't crash 
+            String[] par = {mDestinationUrl.toString()};
+
+            return super.doInBackground(par);
         }
 
     }
