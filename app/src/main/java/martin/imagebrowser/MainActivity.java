@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
     private RecyclerView mRecyclerView;
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
+    private EditText userSearch;
+    private String search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +35,39 @@ public class MainActivity extends ActionBarActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
 
-
-        ProcessPicture proccessPicture = new ProcessPicture("sloth,meme", true);
+        ProcessPicture proccessPicture = new ProcessPicture(search, true);
         proccessPicture.execute();
 
-
-        getFlickrData jsonData = new getFlickrData("sloth,meme", true);
+        getFlickrData jsonData = new getFlickrData(search, true);
         jsonData.execute();
 
+        final Button button = (Button)findViewById(R.id.searchButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search;
+                userSearch = (EditText)findViewById(R.id.searchField);
+                userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
+                search = userSearch.getText().toString();
+
+
+                ProcessPicture proccessPicture = new ProcessPicture(search, true);
+                proccessPicture.execute();
+
+                getFlickrData jsonData = new getFlickrData(search, true);
+                jsonData.execute();
+
+            }
+        });
+
+
+
+
+
+
+
     }
+
 
 
     @Override
