@@ -1,4 +1,26 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context=".MainActivity" tools:ignore="MergeRootFrame" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="#f0f0f0">
+
+
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        />
+
+
+    <view
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="android.support.v7.widget.RecyclerView"
+        ></view>
+
+
+</RelativeLayout>
+
+
+

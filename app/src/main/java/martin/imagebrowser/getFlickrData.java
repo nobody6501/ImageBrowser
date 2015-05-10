@@ -104,10 +104,9 @@ public class getFlickrData extends RawData {
             super.onPostExecute(webData);
             proccessResult();
         }
-        protected String doInBackGround(String... params){
-            //so doesn't crash 
+        protected String doInBackground(String... params){
+            //so doesn't crash
             String[] par = {mDestinationUrl.toString()};
-
             return super.doInBackground(par);
         }
 
