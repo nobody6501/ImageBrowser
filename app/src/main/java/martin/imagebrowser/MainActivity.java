@@ -59,8 +59,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onItemLongClick(View view, int position) {
                 Intent i = new Intent(MainActivity.this, ImageDetail.class);
-//                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
-
+                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+                startActivity(i);
             }
         }));
 
@@ -80,7 +80,6 @@ public class MainActivity extends BaseActivity {
                 userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
                 search = userSearch.getText().toString();
 
-
                 ProcessPicture proccessPicture = new ProcessPicture(search, true);
                 proccessPicture.execute();
 
@@ -89,8 +88,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
-
 
     }
     protected void hideKeyboard(View view)
