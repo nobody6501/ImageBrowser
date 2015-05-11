@@ -31,7 +31,7 @@
 
                 <ImageView
                     android:id="@+id/photo_image"
-                    android:layout_width="match_parent"
+                    android:layout_width="268dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="8dp"
@@ -39,7 +39,7 @@
                     android:layout_marginTop="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/placeholder"
-                    android:layout_height="match_parent" />
+                    android:layout_height="303dp" />
 
                 <TextView
                     android:id="@+id/photo_author"
