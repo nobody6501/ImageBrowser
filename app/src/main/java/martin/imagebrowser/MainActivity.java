@@ -3,7 +3,6 @@ package martin.imagebrowser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -107,25 +106,24 @@ public class MainActivity extends BaseActivity {
         }
 
 
-@Override
-
-        protected void onSaveInstanceState(Bundle outState){
-                super.onSaveInstanceState(outState);
-        //
-        //        search = userSearch.getText().toString();
-        //        outState.putString("text", search);
-                }
-
-        @Override
-        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
-                super.onRestoreInstanceState(savedInstanceState,persistentState);
-        //        userSearch.setText(savedInstanceState.getString("text"));
-        //        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-        //        proccessPicture.execute();
-        //
-        //        getFlickrData jsonData = new getFlickrData(search, true);
-        //        jsonData.execute();
-                }
+//        @Override
+//        protected void onSaveInstanceState(Bundle outState){
+//                super.onSaveInstanceState(outState);
+//        //
+//        //        search = userSearch.getText().toString();
+//        //        outState.putString("text", search);
+//                }
+//
+//        @Override
+//        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
+//                super.onRestoreInstanceState(savedInstanceState,persistentState);
+//        //        userSearch.setText(savedInstanceState.getString("text"));
+//        //        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+//        //        proccessPicture.execute();
+//        //
+//        //        getFlickrData jsonData = new getFlickrData(search, true);
+//        //        jsonData.execute();
+//        }
 
 
         public boolean onCreateOptionsMenu(Menu menu){

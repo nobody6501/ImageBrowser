@@ -77,6 +77,7 @@ public class RawData {
                 return null;
             try{
 
+
                 URL url = new URL(params[0]);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
