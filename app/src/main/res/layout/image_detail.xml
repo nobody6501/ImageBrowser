@@ -51,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:paddingTop="10dp"
-                    android:background="#333333"/>
+                    android:background="#333333"
+                    android:textColor="#FFFFFF" />
 
             </FrameLayout>
 
@@ -62,7 +63,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/photo_tags"
@@ -71,7 +73,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:textColor="#FFFFFF" />
 
 
         </LinearLayout>
