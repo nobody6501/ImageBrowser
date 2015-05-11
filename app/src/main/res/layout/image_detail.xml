@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="martin.imagebrowser.ImageDetail">
+    tools:context="martin.imagebrowser.ImageDetail"
+    android:background="#333333">
 
     <include
         android:id="@+id/app_bar"
@@ -23,11 +24,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#333333">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#333333">
 
                 <ImageView
                     android:id="@+id/photo_image"
@@ -39,14 +42,16 @@
                     android:layout_marginTop="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/placeholder"
-                    android:layout_height="303dp" />
+                    android:layout_height="303dp"
+                    android:background="#333333"/>
 
                 <TextView
                     android:id="@+id/photo_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:background="#333333"/>
 
             </FrameLayout>
 
