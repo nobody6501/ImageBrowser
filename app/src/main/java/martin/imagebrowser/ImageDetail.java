@@ -23,6 +23,9 @@ public class ImageDetail extends BaseActivity {
         TextView photoTitle = (TextView)findViewById(R.id.photo_title);
         photoTitle.setText("Title: " + picture.getmTitle());
 
+//        TextView barTitle = (TextView)findViewById(R.id.barTitle);
+//        barTitle.setText(picture.getmTitle());
+
         TextView photoTags = (TextView)findViewById(R.id.photo_tags);
         photoTags.setText("Tags: " + picture.getmTags());
 

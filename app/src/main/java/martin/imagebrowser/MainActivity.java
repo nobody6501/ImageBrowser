@@ -6,14 +6,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +24,8 @@ public class MainActivity extends BaseActivity {
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
     private EditText userSearch;
-    private String search;
+    private String search="today";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +36,11 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
+        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+        proccessPicture.execute();
+
+        getFlickrData jsonData = new getFlickrData(search, true);
+        jsonData.execute();
 
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -50,11 +53,11 @@ public class MainActivity extends BaseActivity {
                 new ArrayList<Picture>());
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
-                mRecyclerView, new RecyclerItemClickListener.OnItemClickListener(){
+                mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
 
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this,"Tap", Toast.LENGTH_SHORT).show();
+
                 Intent i = new Intent(MainActivity.this, ImageDetail.class);
                 i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
                 startActivity(i);
@@ -62,18 +65,12 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Intent i = new Intent(MainActivity.this, ImageDetail.class);
-                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
-                startActivity(i);
+
             }
         }));
 
 
-//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-//        proccessPicture.execute();
-//
-//        getFlickrData jsonData = new getFlickrData(search, true);
-//        jsonData.execute();
+
 
         final Button button = (Button)findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +86,7 @@ public class MainActivity extends BaseActivity {
 
                 getFlickrData jsonData = new getFlickrData(search, true);
                 jsonData.execute();
+                hideKeyboard(v);
 
             }
         });
@@ -100,43 +98,6 @@ public class MainActivity extends BaseActivity {
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-    }
-
-//    /**
-//     * A placeholder fragment containing a simple view.
-//     */
-//    public static class PlaceholderFragment extends Fragment {
-//
-//        public PlaceholderFragment() {
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-//            return rootView;
-//        }
-//    }
 
     public class ProcessPicture extends getFlickrData{
 
@@ -156,4 +117,27 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        search = userSearch.getText().toString();
+//        outState.putString("text", search);
+//
+//
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+//        super.onRestoreInstanceState(savedInstanceState, persistentState);
+//        userSearch.setText(savedInstanceState.getString("text"));
+//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+//        proccessPicture.execute();
+//
+//        getFlickrData jsonData = new getFlickrData(search, true);
+//        jsonData.execute();
+//
+//
+//    }
 }
