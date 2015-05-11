@@ -33,7 +33,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
@@ -43,13 +42,6 @@ public class MainActivity extends BaseActivity {
         getFlickrData jsonData = new getFlickrData(search, true);
         jsonData.execute();
 
-        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                hideKeyboard(v);
-                return false;
-            }
-        });
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
                 new ArrayList<Picture>());
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
@@ -66,11 +58,15 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-
             }
         }));
-
-
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
 
 
         final Button button = (Button)findViewById(R.id.searchButton);
@@ -92,6 +88,8 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+
+
     }
     protected void hideKeyboard(View view)
     {
@@ -99,6 +97,27 @@ public class MainActivity extends BaseActivity {
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//
+//        search = userSearch.getText().toString();
+//        outState.putString("text", search);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+//        userSearch.setText(savedInstanceState.getString("text"));
+//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+//        proccessPicture.execute();
+//
+//        getFlickrData jsonData = new getFlickrData(search, true);
+//        jsonData.execute();
+    }
 
     public class ProcessPicture extends getFlickrData{
 
@@ -117,28 +136,5 @@ public class MainActivity extends BaseActivity {
                 mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
             }
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        search = userSearch.getText().toString();
-        outState.putString("text", search);
-
-
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-        userSearch.setText(savedInstanceState.getString("text"));
-        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-        proccessPicture.execute();
-
-        getFlickrData jsonData = new getFlickrData(search, true);
-        jsonData.execute();
-
-
     }
 }
