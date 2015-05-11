@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,10 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onItemClick(View view, int position) {
-
+                Toast.makeText(MainActivity.this,"Tap", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, ImageDetail.class);
+                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+                startActivity(i);
             }
 
             @Override

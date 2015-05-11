@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="16dp"
-        flickr:cardCardCornerRadius="8dp">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
