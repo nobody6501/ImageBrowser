@@ -1,9 +1,14 @@
 package martin.imagebrowser;
 
+import java.io.Serializable;
+
 /**
  * Created by Ultimate on 5/8/2015.
  */
-public class Picture {
+public class Picture implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private String mTitle;
     private String mAuthor;
     private String mAuthorId;
@@ -19,6 +24,10 @@ public class Picture {
         this.mTags = mTags;
         this.mImage = mImage;
 
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getmTitle() {

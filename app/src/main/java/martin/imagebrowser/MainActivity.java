@@ -1,13 +1,16 @@
 package martin.imagebrowser;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String LOG_TAG = "MainActivity";
     private List<Picture> pictureList = new ArrayList<Picture>();
@@ -35,18 +38,45 @@ public class MainActivity extends ActionBarActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
 
-        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-        proccessPicture.execute();
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
+        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
+                new ArrayList<Picture>());
+        mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                mRecyclerView, new RecyclerItemClickListener.OnItemClickListener(){
 
-        getFlickrData jsonData = new getFlickrData(search, true);
-        jsonData.execute();
+            @Override
+            public void onItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Intent i = new Intent(MainActivity.this, ImageDetail.class);
+//                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+
+            }
+        }));
+
+
+//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+//        proccessPicture.execute();
+//
+//        getFlickrData jsonData = new getFlickrData(search, true);
+//        jsonData.execute();
 
         final Button button = (Button)findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String search;
-                userSearch = (EditText)findViewById(R.id.searchField);
+                userSearch = (EditText) findViewById(R.id.searchField);
                 userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
                 search = userSearch.getText().toString();
 
@@ -62,11 +92,13 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-
-
-
-
     }
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
 
 
 
