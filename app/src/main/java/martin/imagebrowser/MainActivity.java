@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,22 +77,22 @@ public class MainActivity extends BaseActivity {
 //        jsonData.execute();
 
 
-final Button button=(Button)findViewById(R.id.searchButton);
+        final Button button=(Button)findViewById(R.id.searchButton);
         button.setOnClickListener(new View.OnClickListener(){
-@Override
-public void onClick(View v){
-        String search;
-        userSearch=(EditText)findViewById(R.id.searchField);
-        userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
-        search=userSearch.getText().toString();
+            @Override
+            public void onClick(View v){
+                String search;
+                userSearch=(EditText)findViewById(R.id.searchField);
+                userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
+                search=userSearch.getText().toString();
 
-        ProcessPicture proccessPicture=new ProcessPicture(search,true);
-        proccessPicture.execute();
+                ProcessPicture proccessPicture=new ProcessPicture(search,true);
+                proccessPicture.execute();
 
-        getFlickrData jsonData=new getFlickrData(search,true);
-        jsonData.execute();
+                getFlickrData jsonData=new getFlickrData(search,true);
+                jsonData.execute();
 
-        }
+            }
         });
 
 

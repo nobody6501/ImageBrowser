@@ -3,10 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-<<<<<<< HEAD
-        <!--<item name="actionMenuTextColor">@color/white</item>-->
-=======
->>>>>>> parent of 4afad1d... fixed more colors, deleted some test codes
+
+        <item name="actionMenuTextColor">@color/white</item>
+
 
     </style>
 
