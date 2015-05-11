@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
     private EditText userSearch;
-    private String search;
+    private String search= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +38,27 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
 
+        ProcessPicture proccessPicture=new ProcessPicture(search,true);
+        proccessPicture.execute();
+
+        getFlickrData jsonData=new getFlickrData(search,true);
+        jsonData.execute();
+
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
                 new ArrayList<Picture>());
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(View view, int position) {
+        @Override
+        public void onItemClick(View view, int position) {
 
-                Intent i = new Intent(MainActivity.this, ImageDetail.class);
-                i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
-                startActivity(i);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        }));
+            Intent i = new Intent(MainActivity.this, ImageDetail.class);
+            i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+            startActivity(i);
+        }
+        @Override
+        public void onItemLongClick(View view, int position) {}}));
 
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -91,77 +93,78 @@ public class MainActivity extends BaseActivity {
 
                 getFlickrData jsonData=new getFlickrData(search,true);
                 jsonData.execute();
+                hideKeyboard(v);
 
             }
         });
 
 
         }
-protected void hideKeyboard(View view)
+        protected void hideKeyboard(View view)
         {
-        InputMethodManager in=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+            InputMethodManager in=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
 
 @Override
 
-protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-//
-//        search = userSearch.getText().toString();
-//        outState.putString("text", search);
+        protected void onSaveInstanceState(Bundle outState){
+                super.onSaveInstanceState(outState);
+        //
+        //        search = userSearch.getText().toString();
+        //        outState.putString("text", search);
+                }
+
+        @Override
+        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
+                super.onRestoreInstanceState(savedInstanceState,persistentState);
+        //        userSearch.setText(savedInstanceState.getString("text"));
+        //        ProcessPicture proccessPicture = new ProcessPicture(search, true);
+        //        proccessPicture.execute();
+        //
+        //        getFlickrData jsonData = new getFlickrData(search, true);
+        //        jsonData.execute();
+                }
+
+
+        public boolean onCreateOptionsMenu(Menu menu){
+                // Inflate the menu; this adds items to the action bar if it is present.
+                getMenuInflater().inflate(R.menu.menu_main,menu);
+                return true;
+                }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item){
+                // Handle action bar item clicks here. The action bar will
+                // automatically handle clicks on the Home/Up button, so long
+                // as you specify a parent activity in AndroidManifest.xml.
+                int id=item.getItemId();
+
+                //noinspection SimplifiableIfStatement
+
+                return super.onOptionsItemSelected(item);
+                }
+
+
+        public class ProcessPicture extends getFlickrData {
+
+            public ProcessPicture(String search, boolean match) {
+                super(search, match);
+            }
+
+            public void execute() {
+                super.execute();
+                ProcessData processedData = new ProcessData();
+                processedData.execute();
+            }
+
+            public class ProcessData extends downloadJsonData {
+                protected void onPostExecute(String webData) {
+                    super.onPostExecute(webData);
+                    flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this, getMPictures());
+                    mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
+                }
+            }
         }
-
-@Override
-public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
-        super.onRestoreInstanceState(savedInstanceState,persistentState);
-//        userSearch.setText(savedInstanceState.getString("text"));
-//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-//        proccessPicture.execute();
-//
-//        getFlickrData jsonData = new getFlickrData(search, true);
-//        jsonData.execute();
-        }
-
-
-public boolean onCreateOptionsMenu(Menu menu){
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main,menu);
-        return true;
-        }
-
-@Override
-public boolean onOptionsItemSelected(MenuItem item){
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id=item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-        }
-
-
-public class ProcessPicture extends getFlickrData {
-
-    public ProcessPicture(String search, boolean match) {
-        super(search, match);
-    }
-
-    public void execute() {
-        super.execute();
-        ProcessData processedData = new ProcessData();
-        processedData.execute();
-    }
-
-    public class ProcessData extends downloadJsonData {
-        protected void onPostExecute(String webData) {
-            super.onPostExecute(webData);
-            flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this, getMPictures());
-            mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
-        }
-    }
-}
 }
