@@ -3,7 +3,6 @@ package martin.imagebrowser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -27,6 +26,7 @@ public class MainActivity extends BaseActivity {
 
     private EditText userSearch;
     private String search= "today";
+    static final String LAST_SEARCH = "search";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,25 +88,24 @@ public class MainActivity extends BaseActivity {
 
 
         }
-        protected void hideKeyboard(View view)
-        {
-            InputMethodManager in=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            in.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+
+        @Override
+        protected void onSaveInstanceState(Bundle savedInstanceState){
+
+            savedInstanceState.putString(LAST_SEARCH, search);
+
+            super.onSaveInstanceState(savedInstanceState);
+
         }
 
-
         @Override
-        protected void onSaveInstanceState(Bundle outState){
-                super.onSaveInstanceState(outState);
+        public void onRestoreInstanceState(Bundle savedInstanceState){
+                super.onRestoreInstanceState(savedInstanceState);
 
-                search = userSearch.getText().toString();
-                outState.putString("text", search);
-                }
+                search = savedInstanceState.getString(LAST_SEARCH);
 
-        @Override
-        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
-                super.onRestoreInstanceState(savedInstanceState,persistentState);
-                userSearch.setText(savedInstanceState.getString("text"));
                 ProcessPicture proccessPicture = new ProcessPicture(search, true);
                 proccessPicture.execute();
 
@@ -135,6 +134,11 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+    protected void hideKeyboard(View view)
+    {
+        InputMethodManager in=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
 
 }

@@ -49,6 +49,13 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<ImageHolder>
     }
 
     public Picture getPhoto(int position){
-        return(null != pictureList ? pictureList.get(position): null );
+        if(pictureList!=null)
+            return pictureList.get(position);
+        return null;
     }
+
+//    @Override
+//    public int getItemCount() {
+//        return 0;
+//    }
 }
