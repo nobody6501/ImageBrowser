@@ -2,6 +2,7 @@ package martin.imagebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 
-public class ImageDetail extends BaseActivity {
+public class ImageDetail extends ActionBarActivity {
+
+    public static final String PHOTO_TRANSFER = "PHOTO_TRANSFER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

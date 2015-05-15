@@ -3,6 +3,7 @@ package martin.imagebrowser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = "MainActivity";
     private List<Picture> pictureList = new ArrayList<Picture>();
@@ -36,8 +37,11 @@ public class MainActivity extends BaseActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.hasFixedSize();
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
+
+        mRecyclerView.setHasFixedSize(true);
+
+
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,6));
 
 
         ProcessPicture proccessPicture=new ProcessPicture(search,true);
@@ -49,13 +53,14 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
                         new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                            @Override
+                            public void onItemClick(View view, int position) {
 
-                        Intent i = new Intent(MainActivity.this, ImageDetail.class);
-                        i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
-                        startActivity(i);
-                    }
-                })
+                                Intent i = new Intent(MainActivity.this, ImageDetail.class);
+                                i.putExtra("PHOTO_TRANSFER", flickrRecyclerViewAdapter.getPhoto(position));
+                                startActivity(i);
+                            }
+                        })
         );
 
 
@@ -68,20 +73,22 @@ public class MainActivity extends BaseActivity {
         });
 
 
+
+
         final Button button=(Button)findViewById(R.id.searchButton);
-        button.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                
-                userSearch=(EditText)findViewById(R.id.searchField);
+            public void onClick(View v) {
+
+                userSearch = (EditText) findViewById(R.id.searchField);
                 userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
-                search=userSearch.getText().toString();
+                search = userSearch.getText().toString();
 
 
-                ProcessPicture proccessPicture=new ProcessPicture(search,true);
+                ProcessPicture proccessPicture = new ProcessPicture(search, true);
                 proccessPicture.execute();
 
-                getFlickrData jsonData=new getFlickrData(search,true);
+                getFlickrData jsonData = new getFlickrData(search, true);
                 jsonData.execute();
                 hideKeyboard(v);
 
@@ -90,6 +97,8 @@ public class MainActivity extends BaseActivity {
 
 
         }
+
+
 
 
 
