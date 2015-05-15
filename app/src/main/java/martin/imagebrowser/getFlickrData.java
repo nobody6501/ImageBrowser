@@ -79,7 +79,6 @@ public class getFlickrData extends RawData {
                 String title = jsonPicture.getString(F_title);
                 String author = jsonPicture.getString(F_author);
                 String authorId = jsonPicture.getString(F_autorId);
-//                String link = jsonPicture.getString(F_link);
                 String tags = jsonPicture.getString(F_tags);
 
                 JSONObject jsonMedia = jsonPicture.getJSONObject(F_media);

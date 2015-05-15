@@ -3,10 +3,10 @@ package martin.imagebrowser;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.os.PersistableBundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,16 +26,16 @@ public class MainActivity extends BaseActivity {
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
     private EditText userSearch;
-    private String search= "";
+    private String search= "today";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        GridView gridView = (GridView)findViewById(R.id.gridview);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+
 
         ProcessPicture proccessPicture=new ProcessPicture(search,true);
         proccessPicture.execute();
@@ -47,17 +47,16 @@ public class MainActivity extends BaseActivity {
                 new ArrayList<Picture>());
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
-                mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
 
-        @Override
-        public void onItemClick(View view, int position) {
+                        Intent i = new Intent(MainActivity.this, ImageDetail.class);
+                        i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+                        startActivity(i);
+                    }
+                })
+        );
 
-            Intent i = new Intent(MainActivity.this, ImageDetail.class);
-            i.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
-            startActivity(i);
-        }
-        @Override
-        public void onItemLongClick(View view, int position) {}}));
 
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -66,16 +65,6 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
-
-
-
-
-
-//        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-//        proccessPicture.execute();
-//
-//        getFlickrData jsonData = new getFlickrData(search, true);
-//        jsonData.execute();
 
 
         final Button button=(Button)findViewById(R.id.searchButton);
@@ -106,31 +95,26 @@ public class MainActivity extends BaseActivity {
         }
 
 
-//        @Override
-//        protected void onSaveInstanceState(Bundle outState){
-//                super.onSaveInstanceState(outState);
-//        //
-//        //        search = userSearch.getText().toString();
-//        //        outState.putString("text", search);
-//                }
-//
-//        @Override
-//        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
-//                super.onRestoreInstanceState(savedInstanceState,persistentState);
-//        //        userSearch.setText(savedInstanceState.getString("text"));
-//        //        ProcessPicture proccessPicture = new ProcessPicture(search, true);
-//        //        proccessPicture.execute();
-//        //
-//        //        getFlickrData jsonData = new getFlickrData(search, true);
-//        //        jsonData.execute();
-//        }
+        @Override
+        protected void onSaveInstanceState(Bundle outState){
+                super.onSaveInstanceState(outState);
 
-
-        public boolean onCreateOptionsMenu(Menu menu){
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.menu_main,menu);
-                return true;
+                search = userSearch.getText().toString();
+                outState.putString("text", search);
                 }
+
+        @Override
+        public void onRestoreInstanceState(Bundle savedInstanceState,PersistableBundle persistentState){
+                super.onRestoreInstanceState(savedInstanceState,persistentState);
+                userSearch.setText(savedInstanceState.getString("text"));
+                ProcessPicture proccessPicture = new ProcessPicture(search, true);
+                proccessPicture.execute();
+
+                getFlickrData jsonData = new getFlickrData(search, true);
+                jsonData.execute();
+        }
+
+
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item){
@@ -165,4 +149,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+
+
 }
