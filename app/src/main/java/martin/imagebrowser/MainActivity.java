@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
 
 
     private EditText userSearch;
-    private String search= "today";
+    private String search;
     static final String LAST_SEARCH = "search";
 
     @Override
@@ -33,15 +33,16 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        mRecyclerView.hasFixedSize();
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false));
 
 
         ProcessPicture proccessPicture=new ProcessPicture(search,true);
         proccessPicture.execute();
 
-        getFlickrData jsonData=new getFlickrData(search,true);
-        jsonData.execute();
 
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
                 new ArrayList<Picture>());
@@ -71,10 +72,11 @@ public class MainActivity extends BaseActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String search;
+                
                 userSearch=(EditText)findViewById(R.id.searchField);
                 userSearch.setInputType(InputType.TYPE_CLASS_TEXT);
                 search=userSearch.getText().toString();
+
 
                 ProcessPicture proccessPicture=new ProcessPicture(search,true);
                 proccessPicture.execute();
@@ -95,22 +97,20 @@ public class MainActivity extends BaseActivity {
         protected void onSaveInstanceState(Bundle savedInstanceState){
 
             savedInstanceState.putString(LAST_SEARCH, search);
-
             super.onSaveInstanceState(savedInstanceState);
 
         }
 
         @Override
         public void onRestoreInstanceState(Bundle savedInstanceState){
-                super.onRestoreInstanceState(savedInstanceState);
 
-                search = savedInstanceState.getString(LAST_SEARCH);
+            super.onRestoreInstanceState(savedInstanceState);
+            search = savedInstanceState.getString(LAST_SEARCH);
 
-                ProcessPicture proccessPicture = new ProcessPicture(search, true);
-                proccessPicture.execute();
+            ProcessPicture proccessPicture = new ProcessPicture(search, true);
+            proccessPicture.execute();
 
-                getFlickrData jsonData = new getFlickrData(search, true);
-                jsonData.execute();
+
         }
 
 

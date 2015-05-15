@@ -4,11 +4,10 @@
 
     android:background="#333333">
 
-    <include android:id="@+id/app_bar" layout="@layout/toolbar"></include>
 
 
     <Button
-        android:layout_below="@+id/app_bar"
+
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

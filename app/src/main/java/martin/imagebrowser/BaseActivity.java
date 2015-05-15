@@ -14,13 +14,13 @@ public class BaseActivity extends ActionBarActivity {
     public static final String PHOTO_TRANSFER = "PHOTO_TRANSFER";
 
     protected Toolbar activateToolbar(){
-        if(mToolBar == null ){
-            mToolBar=(Toolbar)findViewById(R.id.app_bar);
-            if(mToolBar !=null){
-                setSupportActionBar(mToolBar);
-            }
-        }
-        return mToolBar;
+//        if(mToolBar == null ){
+//            mToolBar=(Toolbar)findViewById(R.id.app_bar);
+//            if(mToolBar !=null){
+//                setSupportActionBar(mToolBar);
+//            }
+//        }
+        return null;
     }
     protected Toolbar activateToolBarWithHomeEnabled(){
         activateToolbar();

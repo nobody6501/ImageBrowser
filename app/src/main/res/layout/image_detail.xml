@@ -8,11 +8,6 @@
     tools:context="martin.imagebrowser.ImageDetail"
     android:background="#333333">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

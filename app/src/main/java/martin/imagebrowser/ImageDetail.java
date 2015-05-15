@@ -17,7 +17,6 @@ public class ImageDetail extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_detail);
 
-        activateToolBarWithHomeEnabled();
 
         Intent intent = getIntent();
         Picture picture = (Picture)intent.getSerializableExtra(PHOTO_TRANSFER);
