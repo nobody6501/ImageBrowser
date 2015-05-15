@@ -66,7 +66,6 @@ public class getFlickrData extends RawData {
         final String F_photoUrl = "m";
         final String F_author = "author";
         final String F_autorId = "author_id";
-        final String F_link = "link";
         final String F_tags = "tags";
 
         try{
@@ -89,7 +88,7 @@ public class getFlickrData extends RawData {
                 Picture photoObject = new Picture(title, author,authorId,link,tags,photoUrl);
                 this.mPictures.add(photoObject);
             }
-            //dump each entry
+
             for(Picture singlePicture :mPictures){
                 Log.v(LOG_TAG, singlePicture.toString());
             }

@@ -7,7 +7,6 @@ import android.os.PersistableBundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +23,7 @@ public class MainActivity extends BaseActivity {
     private List<Picture> pictureList = new ArrayList<Picture>();
     private RecyclerView mRecyclerView;
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
+
 
     private EditText userSearch;
     private String search= "today";
@@ -113,20 +113,6 @@ public class MainActivity extends BaseActivity {
                 getFlickrData jsonData = new getFlickrData(search, true);
                 jsonData.execute();
         }
-
-
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item){
-                // Handle action bar item clicks here. The action bar will
-                // automatically handle clicks on the Home/Up button, so long
-                // as you specify a parent activity in AndroidManifest.xml.
-                int id=item.getItemId();
-
-                //noinspection SimplifiableIfStatement
-
-                return super.onOptionsItemSelected(item);
-                }
 
 
         public class ProcessPicture extends getFlickrData {

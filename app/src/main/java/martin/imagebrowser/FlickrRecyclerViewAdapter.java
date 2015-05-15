@@ -30,7 +30,6 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<ImageHolder>
         ImageHolder imageHolder = new ImageHolder(view);
         return imageHolder;
 
-//        return null;
     }
 
     //load the pics on screen only
@@ -41,8 +40,6 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<ImageHolder>
         Picasso.with(mContext).load(pictureItem.getmImage()).error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(imageHolder.thumbnail);
-
-//        ImageHolder.title.setText(pictureItem.getmTitle());
 
     }
 
